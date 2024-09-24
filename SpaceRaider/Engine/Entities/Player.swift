@@ -1,8 +1,8 @@
 import SpriteKit
 
 class Player: Entity {
-    lazy var healthBar: SKShapeNode = {
-        return SpaceUI.createHealthBar(health: getHealth(), maxHealth: getMaxHealth(), size: CGSize(width: 100, height: 10))
+    lazy var healthBar: HealthBar = {
+        return HealthBar(health: getHealth(), maxHealth: getMaxHealth()).create()
     }()
     
     init(gameScene: SKScene?) {
@@ -12,9 +12,11 @@ class Player: Entity {
         super.init(image: "spaceship", gameScene: scene)
         
         self.position = CGPoint(x: self.size.width + self.size.width / 2, y: self.size.height + self.size.height / 2)
-        self.healthBar.position = CGPoint(x: self.position.x, y: self.position.y)
+        self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y))
         
-        gameScene?.addChild(self.healthBar)
+        if let healthbar = self.healthBar.getHealthBar() {
+            gameScene?.addChild(healthbar)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -22,10 +24,11 @@ class Player: Entity {
     }
     
     func updateHealthBar() {
-        self.healthBar.removeFromParent()
+        self.healthBar = HealthBar.update(originalbar: self.healthBar, health: self.getHealth(), maxHealth: self.getMaxHealth())
+        self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y))
         
-        self.healthBar = SpaceUI.createHealthBar(health: getHealth(), maxHealth: getMaxHealth(), size: CGSize(width: 100, height: 10))
-        self.healthBar.position = CGPoint(x: self.position.x, y: self.position.y)
-        gameScene?.addChild(self.healthBar)
+        if let healthbar = self.healthBar.getHealthBar() {
+            gameScene?.addChild(healthbar)
+        }
     }
 }

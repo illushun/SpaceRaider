@@ -1,32 +1,87 @@
 import SpriteKit
 
-class SpaceUI {
-    private static let FONT_NAME = "AvenirNext-Bold"
+class HealthBar {
+    var healthBarNode: SKShapeNode?
     
-    static func createHealthBar(health: CGFloat, maxHealth: CGFloat, size: CGSize) -> SKShapeNode {
-        let healthPercentage = health / maxHealth
-        let healthBarWidth = size.width * healthPercentage
+    var size = CGSize(width: 100, height: 10)
+    var health: CGFloat
+    var maxHealth: CGFloat
+    
+    var healthPercentage: CGFloat
+    
+    init(health: CGFloat, maxHealth: CGFloat) {
+        self.health = health
+        self.maxHealth = maxHealth
+        
+        self.healthPercentage = self.health / maxHealth
+    }
+    
+    private func remove() {
+        self.getHealthBar()?.removeFromParent()
+    }
+    
+    /* Getters */
+    
+    func getSize() -> CGSize {
+        return self.size
+    }
+    
+    func getHealthBar() -> SKShapeNode? {
+        return self.healthBarNode
+    }
+    
+    func getPosition() -> CGPoint? {
+        self.getHealthBar()?.position
+    }
+    
+    /* Setters */
+    
+    func setSize(size: CGSize) -> HealthBar {
+        self.size = size
+        return self
+    }
+    
+    func setPosition(position: CGPoint) -> HealthBar {
+        self.getHealthBar()?.position = position
+        return self
+    }
+    
+    func create() -> HealthBar {
+        let healthBarWidth = self.size.width * self.healthPercentage
         
         // background
-        let background = SKShapeNode(rectOf: size, cornerRadius: size.height / 2)
+        let background = SKShapeNode(rectOf: self.size, cornerRadius: self.size.height / 2)
         background.fillColor = .red
         background.strokeColor = .clear
         
         // foreground
-        let foreground = SKShapeNode(rectOf: CGSize(width: healthBarWidth, height: size.height), cornerRadius: size.height / 2)
+        let foreground = SKShapeNode(rectOf: CGSize(width: healthBarWidth, height: self.size.height), cornerRadius: self.size.height / 2)
         foreground.fillColor = .green
         foreground.strokeColor = .clear
         
         // merge both bars
-        let healthBarNode = SKShapeNode(rectOf: size, cornerRadius: size.height / 2)
-        healthBarNode.addChild(background)
-        healthBarNode.addChild(foreground)
+        self.healthBarNode = SKShapeNode(rectOf: self.size, cornerRadius: self.size.height / 2)
+        self.healthBarNode?.addChild(background)
+        self.healthBarNode?.addChild(foreground)
         
-        // position foreground ontop of background
-        foreground.position = CGPoint(x: -(size.width - healthBarWidth) / 2, y: 0)
-        
-        return healthBarNode
+        foreground.position = CGPoint(x: -(self.size.width - healthBarWidth) / 2, y: 0)
+        return self
     }
+    
+    static func update(originalbar: HealthBar, health: CGFloat, maxHealth: CGFloat) -> HealthBar {
+        let originalSize = originalbar.getSize()
+        originalbar.remove()
+        
+        if let position = originalbar.getPosition() {
+            return HealthBar(health: health, maxHealth: maxHealth).setSize(size: originalSize).create().setPosition(position: position)
+        } else {
+            return HealthBar(health: health, maxHealth: maxHealth).setSize(size: originalSize).create()
+        }
+    }
+}
+
+class SpaceUI {
+    private static let FONT_NAME = "AvenirNext-Bold"
     
     /* General UI Components */
     
