@@ -8,17 +8,8 @@ class Voyager: NSObject, SKPhysicsContactDelegate {
     
     // Other Game Related Vars
     var gameOver: Bool = false
-    var score: Int = 0 {
-        didSet {
-            // do score label here
-        }
-    }
-    var points: Int = 0 {
-        didSet {
-            // do points label here
-            UserDefaults.standard.set(points, forKey: "points")
-        }
-    }
+    var score: Int = 0
+    var points: Int = 0
     
     init(scene: SKScene) {
         // need this for the NSObject
@@ -31,6 +22,14 @@ class Voyager: NSObject, SKPhysicsContactDelegate {
     
     func getGravity() -> CGFloat {
         return self.gravity
+    }
+    
+    func getScore() -> Int {
+        return self.score
+    }
+    
+    func getPoints() -> Int {
+        return self.points
     }
     
     /* Setters */
