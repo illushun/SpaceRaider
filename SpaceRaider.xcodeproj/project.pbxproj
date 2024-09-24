@@ -19,6 +19,10 @@
 		9BBFD5CE2CA33F4C00C04083 /* SpaceRaiderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5CD2CA33F4C00C04083 /* SpaceRaiderUITests.swift */; };
 		9BBFD5D02CA33F4C00C04083 /* SpaceRaiderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5CF2CA33F4C00C04083 /* SpaceRaiderUITestsLaunchTests.swift */; };
 		9BBFD5E02CA3415200C04083 /* SpaceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5DF2CA3415200C04083 /* SpaceEngine.swift */; };
+		9BBFD5E22CA34E1E00C04083 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5E12CA34E1E00C04083 /* Entity.swift */; };
+		9BBFD5E52CA34E9E00C04083 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5E42CA34E9E00C04083 /* Player.swift */; };
+		9BBFD5E72CA34EA500C04083 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5E62CA34EA500C04083 /* Enemy.swift */; };
+		9BBFD5E92CA34EAB00C04083 /* Missile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBFD5E82CA34EAB00C04083 /* Missile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,10 @@
 		9BBFD5CD2CA33F4C00C04083 /* SpaceRaiderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceRaiderUITests.swift; sourceTree = "<group>"; };
 		9BBFD5CF2CA33F4C00C04083 /* SpaceRaiderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceRaiderUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9BBFD5DF2CA3415200C04083 /* SpaceEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceEngine.swift; sourceTree = "<group>"; };
+		9BBFD5E12CA34E1E00C04083 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		9BBFD5E42CA34E9E00C04083 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		9BBFD5E62CA34EA500C04083 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		9BBFD5E82CA34EAB00C04083 /* Missile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,9 +145,21 @@
 		9BBFD5DE2CA3414400C04083 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				9BBFD5E32CA34E2100C04083 /* Entities */,
 				9BBFD5DF2CA3415200C04083 /* SpaceEngine.swift */,
+				9BBFD5E12CA34E1E00C04083 /* Entity.swift */,
 			);
 			path = Engine;
+			sourceTree = "<group>";
+		};
+		9BBFD5E32CA34E2100C04083 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9BBFD5E42CA34E9E00C04083 /* Player.swift */,
+				9BBFD5E62CA34EA500C04083 /* Enemy.swift */,
+				9BBFD5E82CA34EAB00C04083 /* Missile.swift */,
+			);
+			path = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,9 +295,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BBFD5E72CA34EA500C04083 /* Enemy.swift in Sources */,
 				9BBFD5B02CA33F4B00C04083 /* GameScene.swift in Sources */,
+				9BBFD5E22CA34E1E00C04083 /* Entity.swift in Sources */,
 				9BBFD5B22CA33F4B00C04083 /* GameViewController.swift in Sources */,
 				9BBFD5E02CA3415200C04083 /* SpaceEngine.swift in Sources */,
+				9BBFD5E52CA34E9E00C04083 /* Player.swift in Sources */,
+				9BBFD5E92CA34EAB00C04083 /* Missile.swift in Sources */,
 				9BBFD5AA2CA33F4B00C04083 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
