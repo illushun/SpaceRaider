@@ -3,13 +3,13 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    var engine: SpaceEngine!
+    var engine: Voyager!
     
     var testent: Entity!
     var player: Player!
     
     override func didMove(to view: SKView) {
-        self.engine = SpaceEngine(scene: self)
+        self.engine = Voyager(scene: self)
         self.engine.testLog()
         
         self.player = Player(gameScene: self)

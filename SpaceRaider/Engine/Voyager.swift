@@ -1,6 +1,6 @@
 import SpriteKit
 
-class SpaceEngine: NSObject, SKPhysicsContactDelegate {
+class Voyager: NSObject, SKPhysicsContactDelegate {
     weak var scene: SKScene?
     
     // Physics
