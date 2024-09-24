@@ -12,11 +12,13 @@ class Player: Entity {
         super.init(image: "spaceship", gameScene: scene)
         
         self.position = CGPoint(x: self.size.width + self.size.width / 2, y: self.size.height + self.size.height / 2)
-        self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y))
+        self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y - self.size.height))
         
         if let healthbar = self.healthBar.getHealthBar() {
             gameScene?.addChild(healthbar)
         }
+        
+        gameScene?.addChild(self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,7 +27,7 @@ class Player: Entity {
     
     func updateHealthBar() {
         self.healthBar = HealthBar.update(originalbar: self.healthBar, health: self.getHealth(), maxHealth: self.getMaxHealth())
-        self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y))
+        self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y - self.size.height))
         
         if let healthbar = self.healthBar.getHealthBar() {
             gameScene?.addChild(healthbar)

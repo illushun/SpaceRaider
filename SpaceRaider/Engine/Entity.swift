@@ -11,7 +11,7 @@ class Entity: SKSpriteNode {
     
     init(image: String, gameScene: SKScene?) {
         let texture = SKTexture(imageNamed: image)
-        super.init(texture: texture, color: .clear, size: texture.size())
+        super.init(texture: texture, color: .clear, size: CGSize(width: 50, height: 50))
         self.gameScene = gameScene
     }
     
@@ -51,12 +51,27 @@ class Entity: SKSpriteNode {
         self.maxHealth = maxHealth
     }
     
+    func move(to position: CGPoint) {
+        let moveAction = SKAction.move(to: position, duration: 2.0)
+        // Add an easing function
+        moveAction.timingFunction = { time in
+            // This is a simple ease-in-ease-out function, feel free to adjust as needed
+            return time * time * (3 - 2 * time)
+        }
+        self.run(moveAction)
+    }
+    
+    func moveSequence(sequence: SKAction) {
+        self.run(sequence)
+    }
+    
     // override this per entity
     func shoot() {
         canShoot = false
         self.cooldown()
     }
     
+    // override this per entity
     func cooldown() {
         let waitAction = SKAction.wait(forDuration: cooldownTime)
         let enableShooting = SKAction.run { [weak self] in
