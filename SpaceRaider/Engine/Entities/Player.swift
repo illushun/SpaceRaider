@@ -9,13 +9,15 @@ class Player: Entity {
         guard let scene = gameScene else {
             fatalError("Cannot initialise Player without a gameScene")
         }
-        super.init(image: "spaceship", gameScene: scene)
+        super.init(image: "spaceship", bitmask: playerCategory, gameScene: scene)
         
-        self.position = CGPoint(x: self.size.width + self.size.width / 2, y: self.size.height + self.size.height / 2)
+        self.position = CGPoint(x: scene.size.width  / 2, y: scene.size.height / 2)
         self.healthBar.setPosition(position: CGPoint(x: self.position.x, y: self.position.y - self.size.height))
         
         if let healthbar = self.healthBar.getHealthBar() {
-            gameScene?.addChild(healthbar)
+            if (self.health > 0.0) {
+                gameScene?.addChild(healthbar)
+            }
         }
         
         gameScene?.addChild(self)
@@ -23,6 +25,23 @@ class Player: Entity {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func shoot() {
+        if (!self.getCanShoot()) { return }
+        
+        canShoot = false  // Set cooldown to false immediately
+
+        let missile = Missile(position: self.position, gameScene: self.gameScene)
+        
+        // Move the projectile up
+        if let gameScene = missile.gameScene {
+            let moveAction = SKAction.moveTo(y: gameScene.size.height + missile.size.height, duration: 1.0)
+            let removeAction = SKAction.removeFromParent()
+            missile.run(SKAction.sequence([moveAction, removeAction]))
+        }
+
+        self.cooldown()
     }
     
     func updateHealthBar() {

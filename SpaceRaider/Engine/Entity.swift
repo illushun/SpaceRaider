@@ -1,18 +1,33 @@
 import SpriteKit
 
+let playerCategory: UInt32 = 0x1 << 0
+let enemyCategory: UInt32 = 0x1 << 2
+let projectileCategory: UInt32 = 0x1 << 1
+
 class Entity: SKSpriteNode {
     weak var gameScene: SKScene?
     
     var health: CGFloat = 100.0
     var maxHealth: CGFloat = 100.0
+    var damage: CGFloat = 10.0
     
     var canShoot: Bool = true
     var cooldownTime: TimeInterval = 1.0
     
-    init(image: String, gameScene: SKScene?) {
+    init(image: String, bitmask: UInt32, gameScene: SKScene?) {
         let texture = SKTexture(imageNamed: image)
         super.init(texture: texture, color: .clear, size: CGSize(width: 50, height: 50))
         self.gameScene = gameScene
+        
+        //self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        //self.physicsBody?.isDynamic = true
+        //self.physicsBody?.collisionBitMask = 0
+        
+        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        self.physicsBody?.isDynamic = true
+        self.physicsBody?.categoryBitMask = bitmask
+        self.physicsBody?.collisionBitMask = 0
+        self.physicsBody?.affectedByGravity = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,9 +68,7 @@ class Entity: SKSpriteNode {
     
     func move(to position: CGPoint) {
         let moveAction = SKAction.move(to: position, duration: 2.0)
-        // Add an easing function
         moveAction.timingFunction = { time in
-            // This is a simple ease-in-ease-out function, feel free to adjust as needed
             return time * time * (3 - 2 * time)
         }
         self.run(moveAction)
@@ -81,10 +94,10 @@ class Entity: SKSpriteNode {
     }
     
     func takeDamage(_ damage: CGFloat) {
+        health -= damage
         if health <= 0.0 {
             self.removeFromParent()
-        } else {
-            health -= damage
+            health = 0.0
         }
     }
 }
